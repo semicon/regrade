@@ -1,0 +1,972 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบรายงานผลการแก้ผลการเรียน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .tab-active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-b from-indigo-50 to-white">
+        <header class="bg-indigo-600 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-6">
+                <h1 class="text-3xl font-bold text-center">ระบบรายงานผลการแก้ผลการเรียนไม่ผ่าน</h1>
+            </div>
+        </header>
+
+        <div class="container mx-auto px-4 py-8">
+            <!-- Tab Navigation -->
+            <div class="flex mb-6 border rounded-lg overflow-hidden shadow-md">
+                <button id="tab-teacher" class="tab-active flex-1 py-3 px-4 text-center font-medium transition-all">สำหรับครูผู้สอน</button>
+                <button id="tab-student" class="flex-1 py-3 px-4 text-center font-medium transition-all bg-gray-100">สำหรับนักเรียน</button>
+                <button id="tab-admin" class="flex-1 py-3 px-4 text-center font-medium transition-all bg-gray-100">สำหรับผู้ดูแลระบบ</button>
+            </div>
+
+            <!-- Teacher Form -->
+            <div id="teacher-form" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-6 text-indigo-800 border-b pb-2">แบบฟอร์มรายงานการแก้ผลการเรียน</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2" for="teacher-name">ชื่อ-นามสกุลผู้สอน</label>
+                        <select id="teacher-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">-- เลือกชื่อ-นามสกุลผู้สอน --</option>
+                            <option value="นางสาวเสาวลักษณ์ จันทะระ">นางสาวเสาวลักษณ์ จันทะระ</option>
+                            <option value="นางสาวประทุมพร ช่างเหล็ก">นางสาวประทุมพร ช่างเหล็ก</option>
+                            <option value="นางสาวสิรินยา บุญสืบ">นางสาวสิรินยา บุญสืบ</option>
+                            <option value="นางสาวสุทธาสินี ไชยรังษี">นางสาวสุทธาสินี ไชยรังษี</option>
+                            <option value="นายอุรุพงษ์ วิทยาพูน">นายอุรุพงษ์ วิทยาพูน</option>
+                            <option value="นางสาวสุภาวดี ใจดี">นางสาวสุภาวดี ใจดี</option>
+                            <option value="นางวราภรณ์ สุภายะ">นางวราภรณ์ สุภายะ</option>
+                            <option value="นางมณีรัตน์ สิทธิกูล">นางมณีรัตน์ สิทธิกูล</option>
+                            <option value="นายณรงค์ฤทธิ์ ยศแก่น">นายณรงค์ฤทธิ์ ยศแก่น</option>
+                            <option value="นางสาวอรวรรณ แก้วแกมเงิน">นางสาวอรวรรณ แก้วแกมเงิน</option>
+                            <option value="นางสาววิไลลักษณ์ เรืองศิลป์">นางสาววิไลลักษณ์ เรืองศิลป์</option>
+                            <option value="นายจักรวาล กันทวัง">นายจักรวาล กันทวัง</option>
+                            <option value="นางสาวชลลดา เทพศิริ">นางสาวชลลดา เทพศิริ</option>
+                            <option value="นางอนัญญา ริดเดิล">นางอนัญญา ริดเดิล</option>
+                            <option value="นางสาวบุศริน เหมทานนท์">นางสาวบุศริน เหมทานนท์</option>
+                            <option value="นางสาวพัชชิตา มูลเมืองมา">นางสาวพัชชิตา มูลเมืองมา</option>
+                            <option value="นางสาวพัชรนันท์ รักสถาน">นางสาวพัชรนันท์ รักสถาน</option>
+                            <option value="นายสิริชัยปัญญา รักสถาน">นายสิริชัยปัญญา รักสถาน</option>
+                            <option value="นางสุวาสิณี วรฉัตร">นางสุวาสิณี วรฉัตร</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2" for="course-id">รหัสรายวิชาที่ต้องการแก้</label>
+                        <input type="text" id="course-id" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="กรุณากรอกรหัสรายวิชา">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2" for="course-name">รายชื่อวิชาที่การแก้</label>
+                    <input type="text" id="course-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="กรุณากรอกชื่อรายวิชา">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2">เลือกนักเรียน</label>
+                    <div class="border rounded-lg overflow-hidden">
+                        <div class="flex flex-wrap bg-gray-100 border-b">
+                            <button class="class-tab py-2 px-4 font-medium tab-active" data-class="m1-1">ม.1/1</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m2-1">ม.2/1</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m3-1">ม.3/1</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m4-1">ม.4/1</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m4-2">ม.4/2</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m5-1">ม.5/1</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m5-2">ม.5/2</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m6-1">ม.6/1</button>
+                            <button class="class-tab py-2 px-4 font-medium" data-class="m6-2">ม.6/2</button>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto" id="m1-1">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11948" class="student-checkbox mr-2" data-id="11948" data-name="เด็กชาย ชยพล ยารังษี" data-class="ม.1/1">
+                                <label for="student-11948">11948 - เด็กชาย ชยพล ยารังษี</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11949" class="student-checkbox mr-2" data-id="11949" data-name="เด็กชาย ชิษณุพงศ์ ลังกาแก้ว" data-class="ม.1/1">
+                                <label for="student-11949">11949 - เด็กชาย ชิษณุพงศ์ ลังกาแก้ว</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11950" class="student-checkbox mr-2" data-id="11950" data-name="เด็กชาย ณัฏฐกิตติ์ กล่อมฤทธิ์" data-class="ม.1/1">
+                                <label for="student-11950">11950 - เด็กชาย ณัฏฐกิตติ์ กล่อมฤทธิ์</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m2-1">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11879" class="student-checkbox mr-2" data-id="11879" data-name="เด็กชาย จิรพัฒน์ เตปิน" data-class="ม.2/1">
+                                <label for="student-11879">11879 - เด็กชาย จิรพัฒน์ เตปิน</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11880" class="student-checkbox mr-2" data-id="11880" data-name="เด็กชาย จะจูเสือ ป่าเด่อ" data-class="ม.2/1">
+                                <label for="student-11880">11880 - เด็กชาย จะจูเสือ ป่าเด่อ</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11881" class="student-checkbox mr-2" data-id="11881" data-name="เด็กชาย จันทะนง" data-class="ม.2/1">
+                                <label for="student-11881">11881 - เด็กชาย จันทะนง</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m3-1">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11745" class="student-checkbox mr-2" data-id="11745" data-name="เด็กชาย สุภณัฐ ไม้เกตุ" data-class="ม.3/1">
+                                <label for="student-11745">11745 - เด็กชาย สุภณัฐ ไม้เกตุ</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11815" class="student-checkbox mr-2" data-id="11815" data-name="เด็กชาย รพีภัทร ทิพย์ปลูก" data-class="ม.3/1">
+                                <label for="student-11815">11815 - เด็กชาย รพีภัทร ทิพย์ปลูก</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11821" class="student-checkbox mr-2" data-id="11821" data-name="เด็กชาย ณัฐวัศ อัยกา" data-class="ม.3/1">
+                                <label for="student-11821">11821 - เด็กชาย ณัฐวัศ อัยกา</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11824" class="student-checkbox mr-2" data-id="11824" data-name="เด็กชาย พัชรพล บุญชื่น" data-class="ม.3/1">
+                                <label for="student-11824">11824 - เด็กชาย พัชรพล บุญชื่น</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m4-1">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11963" class="student-checkbox mr-2" data-id="11963" data-name="นาย กฤษฎา ลีลาศ" data-class="ม.4/1">
+                                <label for="student-11963">11963 - นาย กฤษฎา ลีลาศ</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11782" class="student-checkbox mr-2" data-id="11782" data-name="นางสาว กิตติมา สุระแสน" data-class="ม.4/1">
+                                <label for="student-11782">11782 - นางสาว กิตติมา สุระแสน</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11785" class="student-checkbox mr-2" data-id="11785" data-name="นางสาว ณัฐชยา พื้นแสน" data-class="ม.4/1">
+                                <label for="student-11785">11785 - นางสาว ณัฐชยา พื้นแสน</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m4-2">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11769" class="student-checkbox mr-2" data-id="11769" data-name="นาย กฤตกร พรหมประดิษฐ์" data-class="ม.4/2">
+                                <label for="student-11769">11769 - นาย กฤตกร พรหมประดิษฐ์</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11770" class="student-checkbox mr-2" data-id="11770" data-name="นาย กวินท์ กล่ำสกุล" data-class="ม.4/2">
+                                <label for="student-11770">11770 - นาย กวินท์ กล่ำสกุล</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11772" class="student-checkbox mr-2" data-id="11772" data-name="นาย กิตติศักดิ์ ไชยชนะ" data-class="ม.4/2">
+                                <label for="student-11772">11772 - นาย กิตติศักดิ์ ไชยชนะ</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m5-1">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11803" class="student-checkbox mr-2" data-id="11803" data-name="นาย จันทร์ฐกานต์ เริ่มอรุณรอง" data-class="ม.5/1">
+                                <label for="student-11803">11803 - นาย จันทร์ฐกานต์ เริ่มอรุณรอง</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11854" class="student-checkbox mr-2" data-id="11854" data-name="นาย วีรภัทร ใจวัน" data-class="ม.5/1">
+                                <label for="student-11854">11854 - นาย วีรภัทร ใจวัน</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11902" class="student-checkbox mr-2" data-id="11902" data-name="นาย ฐิติกร หวังประสพกลาง" data-class="ม.5/1">
+                                <label for="student-11902">11902 - นาย ฐิติกร หวังประสพกลาง</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m5-2">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11695" class="student-checkbox mr-2" data-id="11695" data-name="นาย ชัยประสิทธิ์ ชัยวงค์" data-class="ม.5/2">
+                                <label for="student-11695">11695 - นาย ชัยประสิทธิ์ ชัยวงค์</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11702" class="student-checkbox mr-2" data-id="11702" data-name="นาย ภานุวัตน์ เจริญ" data-class="ม.5/2">
+                                <label for="student-11702">11702 - นาย ภานุวัตน์ เจริญ</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11736" class="student-checkbox mr-2" data-id="11736" data-name="นาย ธนา บุญมาวัฒน์" data-class="ม.5/2">
+                                <label for="student-11736">11736 - นาย ธนา บุญมาวัฒน์</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m6-1">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11809" class="student-checkbox mr-2" data-id="11809" data-name="นาย วรัญญู กุญกิจ" data-class="ม.6/1">
+                                <label for="student-11809">11809 - นาย วรัญญู กุญกิจ</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11847" class="student-checkbox mr-2" data-id="11847" data-name="นาย รัฐกร จำปา" data-class="ม.6/1">
+                                <label for="student-11847">11847 - นาย รัฐกร จำปา</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11938" class="student-checkbox mr-2" data-id="11938" data-name="นาย คริสโตเฟอร์ เมดจ์" data-class="ม.6/1">
+                                <label for="student-11938">11938 - นาย คริสโตเฟอร์ เมดจ์</label>
+                            </div>
+                        </div>
+                        
+                        <div class="student-list p-4 max-h-60 overflow-y-auto hidden" id="m6-2">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11693" class="student-checkbox mr-2" data-id="11693" data-name="นาย จักรภัทร น้อยหมอ" data-class="ม.6/2">
+                                <label for="student-11693">11693 - นาย จักรภัทร น้อยหมอ</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11697" class="student-checkbox mr-2" data-id="11697" data-name="นาย ธนพนธ์ โพธิ์ระหงส์" data-class="ม.6/2">
+                                <label for="student-11697">11697 - นาย ธนพนธ์ โพธิ์ระหงส์</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11698" class="student-checkbox mr-2" data-id="11698" data-name="นาย ธนัท สร้อยเพ็ชร" data-class="ม.6/2">
+                                <label for="student-11698">11698 - นาย ธนัท สร้อยเพ็ชร</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="student-11701" class="student-checkbox mr-2" data-id="11701" data-name="นาย พัชรพล อินปรี" data-class="ม.6/2">
+                                <label for="student-11701">11701 - นาย พัชรพล อินปรี</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">ผลการเรียนที่ไม่ผ่าน</label>
+                        <select id="old-grade" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">-- เลือกผลการเรียนเดิม --</option>
+                            <option value="0">0</option>
+                            <option value="ร">ร</option>
+                            <option value="มผ">มผ</option>
+                            <option value="ไม่มีสิทธิสอบ">ไม่มีสิทธิสอบ</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">ผลการเรียนที่แก้ไขแล้ว</label>
+                        <select id="new-grade" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">-- เลือกผลการเรียนใหม่ --</option>
+                            <option value="1">1</option>
+                            <option value="1.5">1.5</option>
+                            <option value="2">2</option>
+                            <option value="2.5">2.5</option>
+                            <option value="3">3</option>
+                            <option value="3.5">3.5</option>
+                            <option value="4">4</option>
+                            <option value="ผ่าน">ผ่าน</option>
+                            <option value="มีสิทธิสอบ">มีสิทธิสอบ</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2">นักเรียนที่เลือก</label>
+                    <div id="selected-students" class="border rounded-lg p-4 min-h-[100px] bg-gray-50">
+                        <p class="text-gray-500 italic">ยังไม่ได้เลือกนักเรียน</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button id="submit-form" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-all font-medium">บันทึกข้อมูล</button>
+                </div>
+            </div>
+
+            <!-- Student Form -->
+            <div id="student-form" class="bg-white rounded-lg shadow-lg p-6 mb-8 hidden">
+                <h2 class="text-2xl font-semibold mb-6 text-indigo-800 border-b pb-2">ค้นหาผลการแก้ผลการเรียน</h2>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2" for="student-id-search">รหัสประจำตัวนักเรียน</label>
+                    <div class="flex">
+                        <input type="text" id="student-id-search" class="flex-1 px-4 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="กรุณากรอกรหัสประจำตัวนักเรียน">
+                        <button id="search-button" class="bg-indigo-600 text-white px-6 py-2 rounded-r-lg hover:bg-indigo-700 transition-all font-medium">ค้นหา</button>
+                    </div>
+                </div>
+                
+                <div id="student-results" class="hidden">
+                    <div class="bg-indigo-50 rounded-lg p-4 mb-6">
+                        <h3 class="font-medium text-lg mb-2" id="student-info"></h3>
+                        <p class="text-gray-600" id="student-class"></p>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-4 text-indigo-800">ผลการแก้ผลการเรียน</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left">รหัสวิชา</th>
+                                    <th class="py-3 px-4 text-left">ชื่อวิชา</th>
+                                    <th class="py-3 px-4 text-left">ผลการเรียนเดิม</th>
+                                    <th class="py-3 px-4 text-left">ผลการเรียนใหม่</th>
+                                    <th class="py-3 px-4 text-left">ครูผู้สอน</th>
+                                    <th class="py-3 px-4 text-left">สถานะ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="grade-results">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="no-results" class="hidden">
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                        <p class="text-yellow-700">ไม่พบข้อมูลนักเรียนที่ค้นหา</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Form -->
+            <div id="admin-form" class="bg-white rounded-lg shadow-lg p-6 mb-8 hidden">
+                <h2 class="text-2xl font-semibold mb-6 text-indigo-800 border-b pb-2">การอนุมัติการแก้ผลการเรียน</h2>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold">รายการรอการอนุมัติ</h3>
+                        <button id="admin-login-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all font-medium">เข้าสู่ระบบผู้ดูแล</button>
+                    </div>
+                    
+                    <div id="admin-status" class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-700 text-center">
+                        กรุณาเข้าสู่ระบบเพื่อดำเนินการอนุมัติ
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left">รหัสนักเรียน</th>
+                                    <th class="py-3 px-4 text-left">ชื่อ-นามสกุล</th>
+                                    <th class="py-3 px-4 text-left">ชั้น</th>
+                                    <th class="py-3 px-4 text-left">รหัสวิชา</th>
+                                    <th class="py-3 px-4 text-left">ชื่อวิชา</th>
+                                    <th class="py-3 px-4 text-left">ผลการเรียนเดิม</th>
+                                    <th class="py-3 px-4 text-left">ผลการเรียนใหม่</th>
+                                    <th class="py-3 px-4 text-left">ครูผู้สอน</th>
+                                    <th class="py-3 px-4 text-left">การอนุมัติ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pending-approvals">
+                                <!-- Pending approvals will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-indigo-800">รายการที่อนุมัติแล้ว</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left">รหัสนักเรียน</th>
+                                    <th class="py-3 px-4 text-left">ชื่อ-นามสกุล</th>
+                                    <th class="py-3 px-4 text-left">ชั้น</th>
+                                    <th class="py-3 px-4 text-left">รหัสวิชา</th>
+                                    <th class="py-3 px-4 text-left">ชื่อวิชา</th>
+                                    <th class="py-3 px-4 text-left">ผลการเรียนเดิม</th>
+                                    <th class="py-3 px-4 text-left">ผลการเรียนใหม่</th>
+                                    <th class="py-3 px-4 text-left">ครูผู้สอน</th>
+                                    <th class="py-3 px-4 text-left">วันที่อนุมัติ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="approved-list">
+                                <!-- Approved items will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Teacher Password -->
+    <div id="teacher-password-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 class="text-xl font-semibold mb-4">ยืนยันการบันทึกข้อมูล</h3>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="teacher-password">รหัสผ่านสำหรับครู</label>
+                <input type="password" id="teacher-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="กรุณากรอกรหัสผ่าน">
+            </div>
+            <div id="teacher-password-error" class="mb-4 text-red-500 hidden">
+                รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button id="cancel-teacher-password" class="px-4 py-2 border rounded-lg hover:bg-gray-100 transition-all">ยกเลิก</button>
+                <button id="confirm-teacher-password" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Admin Login -->
+    <div id="admin-login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 class="text-xl font-semibold mb-4">เข้าสู่ระบบผู้ดูแล</h3>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="admin-username">ชื่อผู้ใช้</label>
+                <input type="text" id="admin-username" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="กรุณากรอกชื่อผู้ใช้">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="admin-password">รหัสผ่าน</label>
+                <input type="password" id="admin-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="กรุณากรอกรหัสผ่าน">
+            </div>
+            <div id="login-error" class="mb-4 text-red-500 hidden">
+                ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button id="cancel-login" class="px-4 py-2 border rounded-lg hover:bg-gray-100 transition-all">ยกเลิก</button>
+                <button id="confirm-login" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all">เข้าสู่ระบบ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Approval Confirmation -->
+    <div id="approval-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 class="text-xl font-semibold mb-4">ยืนยันการอนุมัติ</h3>
+            <div class="mb-4">
+                <p id="approval-details" class="text-gray-700"></p>
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button id="cancel-approval" class="px-4 py-2 border rounded-lg hover:bg-gray-100 transition-all">ยกเลิก</button>
+                <button id="confirm-approval" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all">ยืนยันการอนุมัติ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Notification -->
+    <div id="success-notification" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+        <p id="notification-message">บันทึกข้อมูลสำเร็จ</p>
+    </div>
+
+    <script>
+      // Replace with your Google Apps Script Web App URL
+      const API_URL = 'https://script.google.com/macros/s/AKfycbydUcmD3VTdTxqCT7nLtutnwkmy-2UgC8AdPEFbmpCERj459YaY1VSLIQk7dABw4XXoyw/exec';
+
+
+      // Sample data storage (for initial testing, can be removed after server integration)
+      let gradeCorrections = [];
+      let isAdminLoggedIn = false;
+
+      // DOM Elements
+      const tabTeacher = document.getElementById('tab-teacher');
+      const tabStudent = document.getElementById('tab-student');
+      const tabAdmin = document.getElementById('tab-admin');
+      const teacherForm = document.getElementById('teacher-form');
+      const studentForm = document.getElementById('student-form');
+      const adminForm = document.getElementById('admin-form');
+      const classTabs = document.querySelectorAll('.class-tab');
+      const studentLists = document.querySelectorAll('.student-list');
+      const selectedStudentsDiv = document.getElementById('selected-students');
+      const submitFormBtn = document.getElementById('submit-form');
+      const searchButton = document.getElementById('search-button');
+      const studentIdSearch = document.getElementById('student-id-search');
+      const studentResults = document.getElementById('student-results');
+      const noResults = document.getElementById('no-results');
+      const studentInfo = document.getElementById('student-info');
+      const studentClass = document.getElementById('student-class');
+      const gradeResults = document.getElementById('grade-results');
+      const pendingApprovals = document.getElementById('pending-approvals');
+      const approvedList = document.getElementById('approved-list');
+      const adminLoginBtn = document.getElementById('admin-login-btn');
+      const adminLoginModal = document.getElementById('admin-login-modal');
+      const adminUsername = document.getElementById('admin-username');
+      const adminPassword = document.getElementById('admin-password');
+      const confirmLogin = document.getElementById('confirm-login');
+      const cancelLogin = document.getElementById('cancel-login');
+      const loginError = document.getElementById('login-error');
+      const adminStatus = document.getElementById('admin-status');
+      const approvalModal = document.getElementById('approval-modal');
+      const approvalDetails = document.getElementById('approval-details');
+      const confirmApproval = document.getElementById('confirm-approval');
+      const cancelApproval = document.getElementById('cancel-approval');
+      const successNotification = document.getElementById('success-notification');
+      const notificationMessage = document.getElementById('notification-message');
+      const teacherPasswordModal = document.getElementById('teacher-password-modal');
+      const teacherPassword = document.getElementById('teacher-password');
+      const confirmTeacherPassword = document.getElementById('confirm-teacher-password');
+      const cancelTeacherPassword = document.getElementById('cancel-teacher-password');
+      const teacherPasswordError = document.getElementById('teacher-password-error');
+      const studentCheckboxes = document.querySelectorAll('.student-checkbox');
+
+      // JSONP utility function
+      function jsonp(url, callback) {
+          const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+          window[callbackName] = function(data) {
+              delete window[callbackName];
+              document.body.removeChild(script);
+              callback(data);
+          };
+
+          const script = document.createElement('script');
+          script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + callbackName;
+          script.onerror = () => {
+              delete window[callbackName];
+              document.body.removeChild(script);
+              callback({ status: 'error', message: 'Network error' });
+          };
+          document.body.appendChild(script);
+      }
+
+      // Tab switching
+      tabTeacher.addEventListener('click', () => {
+          tabTeacher.classList.add('tab-active');
+          tabTeacher.classList.remove('bg-gray-100');
+          tabStudent.classList.remove('tab-active');
+          tabStudent.classList.add('bg-gray-100');
+          tabAdmin.classList.remove('tab-active');
+          tabAdmin.classList.add('bg-gray-100');
+          teacherForm.classList.remove('hidden');
+          studentForm.classList.add('hidden');
+          adminForm.classList.add('hidden');
+      });
+
+      tabStudent.addEventListener('click', () => {
+          tabStudent.classList.add('tab-active');
+          tabStudent.classList.remove('bg-gray-100');
+          tabTeacher.classList.remove('tab-active');
+          tabTeacher.classList.add('bg-gray-100');
+          tabAdmin.classList.remove('tab-active');
+          tabAdmin.classList.add('bg-gray-100');
+          studentForm.classList.remove('hidden');
+          teacherForm.classList.add('hidden');
+          adminForm.classList.add('hidden');
+      });
+
+      tabAdmin.addEventListener('click', () => {
+          tabAdmin.classList.add('tab-active');
+          tabAdmin.classList.remove('bg-gray-100');
+          tabTeacher.classList.remove('tab-active');
+          tabTeacher.classList.add('bg-gray-100');
+          tabStudent.classList.remove('tab-active');
+          tabStudent.classList.add('bg-gray-100');
+          adminForm.classList.remove('hidden');
+          teacherForm.classList.add('hidden');
+          studentForm.classList.add('hidden');
+          loadPendingApprovals();
+          loadApprovedList();
+      });
+
+      // Class tab switching
+      classTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+              classTabs.forEach(t => t.classList.remove('tab-active'));
+              tab.classList.add('tab-active');
+              studentLists.forEach(list => list.classList.add('hidden'));
+              const classId = tab.getAttribute('data-class');
+              document.getElementById(classId).classList.remove('hidden');
+          });
+      });
+
+      // Handle student selection
+      studentCheckboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', updateSelectedStudents);
+      });
+
+      function updateSelectedStudents() {
+          const selectedStudents = Array.from(document.querySelectorAll('.student-checkbox:checked'));
+          
+          if (selectedStudents.length === 0) {
+              selectedStudentsDiv.innerHTML = '<p class="text-gray-500 italic">ยังไม่ได้เลือกนักเรียน</p>';
+              return;
+          }
+          
+          let html = '';
+          selectedStudents.forEach(student => {
+              const id = student.getAttribute('data-id');
+              const name = student.getAttribute('data-name');
+              const className = student.getAttribute('data-class');
+              
+              html += `
+              <div class="flex items-center justify-between bg-indigo-50 p-2 rounded mb-2">
+                  <div>
+                      <span class="font-medium">${id}</span> - ${name} (${className})
+                  </div>
+                  <button class="remove-student text-red-500 hover:text-red-700" data-id="${id}">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                      </svg>
+                  </button>
+              </div>
+              `;
+          });
+          
+          selectedStudentsDiv.innerHTML = html;
+          
+          document.querySelectorAll('.remove-student').forEach(button => {
+              button.addEventListener('click', function() {
+                  const id = this.getAttribute('data-id');
+                  document.getElementById(`student-${id}`).checked = false;
+                  updateSelectedStudents();
+              });
+          });
+      }
+
+      // Form submission with password verification
+      submitFormBtn.addEventListener('click', () => {
+          const teacherName = document.getElementById('teacher-name').value;
+          const courseId = document.getElementById('course-id').value;
+          const courseName = document.getElementById('course-name').value;
+          const oldGrade = document.getElementById('old-grade').value;
+          const newGrade = document.getElementById('new-grade').value;
+          const selectedStudents = Array.from(document.querySelectorAll('.student-checkbox:checked'));
+          
+          if (!teacherName || !courseId || !courseName || !oldGrade || !newGrade || selectedStudents.length === 0) {
+              alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+              return;
+          }
+          
+          teacherPasswordModal.classList.remove('hidden');
+          teacherPassword.value = '';
+          teacherPasswordError.classList.add('hidden');
+          teacherPassword.focus();
+      });
+
+      // Teacher password confirmation
+      confirmTeacherPassword.addEventListener('click', () => {
+          const password = teacherPassword.value;
+          
+          const teacherName = document.getElementById('teacher-name').value;
+          const courseId = document.getElementById('course-id').value;
+          const courseName = document.getElementById('course-name').value;
+          const oldGrade = document.getElementById('old-grade').value;
+          const newGrade = document.getElementById('new-grade').value;
+          const selectedStudents = Array.from(document.querySelectorAll('.student-checkbox:checked'));
+          
+          const corrections = selectedStudents.map(student => ({
+              studentId: student.getAttribute('data-id'),
+              studentName: student.getAttribute('data-name'),
+              studentClass: student.getAttribute('data-class'),
+              courseId,
+              courseName,
+              oldGrade,
+              newGrade,
+              teacherName,
+              timestamp: new Date().toISOString()
+          }));
+          
+          const data = encodeURIComponent(JSON.stringify({
+              action: 'submitCorrection',
+              teacherPassword: password,
+              corrections: corrections
+          }));
+          
+          jsonp(`${API_URL}?action=submitCorrection&data=${data}`, data => {
+              if (data.status === 'success') {
+                  teacherPasswordModal.classList.add('hidden');
+                  document.getElementById('teacher-name').selectedIndex = 0;
+                  document.getElementById('course-id').value = '';
+                  document.getElementById('course-name').value = '';
+                  document.getElementById('old-grade').selectedIndex = 0;
+                  document.getElementById('new-grade').selectedIndex = 0;
+                  studentCheckboxes.forEach(checkbox => {
+                      checkbox.checked = false;
+                  });
+                  updateSelectedStudents();
+                  showNotification('บันทึกข้อมูลสำเร็จ');
+              } else {
+                  teacherPasswordError.classList.remove('hidden');
+                  teacherPasswordError.textContent = data.message || 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
+              }
+          });
+      });
+
+      // Student search
+      searchButton.addEventListener('click', () => {
+          const studentId = studentIdSearch.value.trim();
+          
+          if (!studentId) {
+              alert('กรุณากรอกรหัสประจำตัวนักเรียน');
+              return;
+          }
+          
+          jsonp(`${API_URL}?action=searchStudent&studentId=${studentId}`, data => {
+              if (data.status === 'success' && data.data.length > 0) {
+                  const student = data.data[0];
+                  studentInfo.textContent = `${student.studentId} - ${student.studentName}`;
+                  studentClass.textContent = `ระดับชั้น ${student.studentClass}`;
+                  
+                  let html = '';
+                  data.data.forEach(correction => {
+                      html += `
+                      <tr>
+                          <td class="py-3 px-4 border-b">${correction.courseId}</td>
+                          <td class="py-3 px-4 border-b">${correction.courseName}</td>
+                          <td class="py-3 px-4 border-b">${correction.oldGrade}</td>
+                          <td class="py-3 px-4 border-b">${correction.newGrade}</td>
+                          <td class="py-3 px-4 border-b">${correction.teacherName}</td>
+                          <td class="py-3 px-4 border-b">
+                              ${correction.approved ? 
+                                  '<span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">อนุมัติแล้ว</span>' : 
+                                  '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">รอการอนุมัติ</span>'
+                              }
+                          </td>
+                      </tr>
+                      `;
+                  });
+                  
+                  gradeResults.innerHTML = html;
+                  studentResults.classList.remove('hidden');
+                  noResults.classList.add('hidden');
+              } else {
+                  studentResults.classList.add('hidden');
+                  noResults.classList.remove('hidden');
+              }
+          });
+      });
+
+      // Admin login (client-side for simplicity, as in original)
+      adminLoginBtn.addEventListener('click', () => {
+          if (isAdminLoggedIn) {
+              isAdminLoggedIn = false;
+              adminLoginBtn.textContent = 'เข้าสู่ระบบผู้ดูแล';
+              adminStatus.classList.remove('bg-green-50', 'border-green-200', 'text-green-700');
+              adminStatus.classList.add('bg-yellow-50', 'border-yellow-200', 'text-yellow-700');
+              adminStatus.textContent = 'กรุณาเข้าสู่ระบบเพื่อดำเนินการอนุมัติ';
+              loadPendingApprovals();
+              showNotification('ออกจากระบบสำเร็จ');
+          } else {
+              adminLoginModal.classList.remove('hidden');
+              adminUsername.value = '';
+              adminPassword.value = '';
+              loginError.classList.add('hidden');
+              adminUsername.focus();
+          }
+      });
+
+      confirmLogin.addEventListener('click', () => {
+          const username = adminUsername.value;
+          const password = adminPassword.value;
+          
+          isAdminLoggedIn = true; // Temporary client-side state (in real app, verify server-side)
+          adminLoginModal.classList.add('hidden');
+          adminLoginBtn.textContent = 'ออกจากระบบ';
+          adminStatus.classList.remove('bg-yellow-50', 'border-yellow-200', 'text-yellow-700');
+          adminStatus.classList.add('bg-green-50', 'border-green-200', 'text-green-700');
+          adminStatus.textContent = 'เข้าสู่ระบบแล้ว - สามารถดำเนินการอนุมัติได้';
+          loadPendingApprovals();
+          loadApprovedList();
+          showNotification('เข้าสู่ระบบสำเร็จ');
+      });
+
+      // Load pending approvals
+      function loadPendingApprovals() {
+          jsonp(`${API_URL}?action=getPendingCorrections`, data => {
+              if (data.status === 'success' && data.data.length > 0) {
+                  let html = '';
+                  data.data.forEach((correction, index) => {
+                      html += `
+                      <tr>
+                          <td class="py-3 px-4 border-b">${correction.studentId}</td>
+                          <td class="py-3 px-4 border-b">${correction.studentName}</td>
+                          <td class="py-3 px-4 border-b">${correction.studentClass}</td>
+                          <td class="py-3 px-4 border-b">${correction.courseId}</td>
+                          <td class="py-3 px-4 border-b">${correction.courseName}</td>
+                          <td class="py-3 px-4 border-b">${correction.oldGrade}</td>
+                          <td class="py-3 px-4 border-b">${correction.newGrade}</td>
+                          <td class="py-3 px-4 border-b">${correction.teacherName}</td>
+                          <td class="py-3 px-4 border-b">
+                              <button class="approve-btn bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition-all ${isAdminLoggedIn ? '' : 'opacity-50 cursor-not-allowed'}" 
+                                  data-index="${index}" ${isAdminLoggedIn ? '' : 'disabled'}>อนุมัติ</button>
+                          </td>
+                      </tr>
+                      `;
+                  });
+                  
+                  pendingApprovals.innerHTML = html;
+                  
+                  if (isAdminLoggedIn) {
+                      document.querySelectorAll('.approve-btn').forEach(button => {
+                          button.addEventListener('click', function() {
+                              const index = parseInt(this.getAttribute('data-index'));
+                              showApprovalModal(index);
+                          });
+                      });
+                  }
+              } else {
+                  pendingApprovals.innerHTML = `
+                  <tr>
+                      <td colspan="9" class="py-4 px-4 text-center text-gray-500">ไม่มีรายการรอการอนุมัติ</td>
+                  </tr>
+                  `;
+              }
+          });
+      }
+
+      // Load approved list
+      function loadApprovedList() {
+          jsonp(`${API_URL}?action=getApprovedCorrections`, data => {
+              if (data.status === 'success' && data.data.length > 0) {
+                  let html = '';
+                  data.data.forEach(correction => {
+                      const approvalDate = correction.approvalDate ? new Date(correction.approvalDate).toLocaleDateString('th-TH') : '-';
+                      
+                      html += `
+                      <tr>
+                          <td class="py-3 px-4 border-b">${correction.studentId}</td>
+                          <td class="py-3 px-4 border-b">${correction.studentName}</td>
+                          <td class="py-3 px-4 border-b">${correction.studentClass}</td>
+                          <td class="py-3 px-4 border-b">${correction.courseId}</td>
+                          <td class="py-3 px-4 border-b">${correction.courseName}</td>
+                          <td class="py-3 px-4 border-b">${correction.oldGrade}</td>
+                          <td class="py-3 px-4 border-b">${correction.newGrade}</td>
+                          <td class="py-3 px-4 border-b">${correction.teacherName}</td>
+                          <td class="py-3 px-4 border-b">${approvalDate}</td>
+                      </tr>
+                      `;
+                  });
+                  
+                  approvedList.innerHTML = html;
+              } else {
+                  approvedList.innerHTML = `
+                  <tr>
+                      <td colspan="9" class="py-4 px-4 text-center text-gray-500">ไม่มีรายการที่อนุมัติแล้ว</td>
+                  </tr>
+                  `;
+              }
+          });
+      }
+
+      // Approval modal
+      let currentApprovalIndex = -1;
+
+      function showApprovalModal(index) {
+          if (!isAdminLoggedIn) return;
+          
+          jsonp(`${API_URL}?action=getPendingCorrections`, data => {
+              if (data.status === 'success' && data.data[index]) {
+                  const correction = data.data[index];
+                  currentApprovalIndex = index;
+                  console.log(currentApprovalIndex)
+                  approvalDetails.innerHTML = `
+                      <p class="mb-2"><strong>รหัสนักเรียน:</strong> ${correction.studentId}</p>
+                      <p class="mb-2"><strong>ชื่อ-นามสกุล:</strong> ${correction.studentName}</p>
+                      <p class="mb-2"><strong>ชั้น:</strong> ${correction.studentClass}</p>
+                      <p class="mb-2"><strong>รหัสวิชา:</strong> ${correction.courseId}</p>
+                      <p class="mb-2"><strong>ชื่อวิชา:</strong> ${correction.courseName}</p>
+                      <p class="mb-2"><strong>ผลการเรียนเดิม:</strong> ${correction.oldGrade}</p>
+                      <p class="mb-2"><strong>ผลการเรียนใหม่:</strong> ${correction.newGrade}</p>
+                      <p><strong>ครูผู้สอน:</strong> ${correction.teacherName}</p>
+                  `;
+                  
+                  approvalModal.classList.remove('hidden');
+              }
+          });
+      }
+
+      confirmApproval.addEventListener('click', () => {
+          if (currentApprovalIndex >= 0) {
+              const data = encodeURIComponent(JSON.stringify({
+                  action: 'approveCorrection',
+                  adminUsername: adminUsername.value,
+                  adminPassword: adminPassword.value,
+                  index: currentApprovalIndex
+              }));
+              
+              jsonp(`${API_URL}?action=approveCorrection&data=${data}`, data => {
+                  if (data.status === 'success') {
+                      loadPendingApprovals();
+                      loadApprovedList();
+                      showNotification('อนุมัติรายการสำเร็จ');
+                      approvalModal.classList.add('hidden');
+                  } else {
+                      alert(data.message || 'เกิดข้อผิดพลาดในการอนุมัติ');
+                  }
+              });
+          }
+      });
+
+      cancelApproval.addEventListener('click', () => {
+          approvalModal.classList.add('hidden');
+      });
+
+      // Success notification
+      function showNotification(message) {
+          notificationMessage.textContent = message;
+          successNotification.classList.remove('translate-y-full', 'opacity-0');
+          
+          setTimeout(() => {
+              successNotification.classList.add('translate-y-full', 'opacity-0');
+          }, 3000);
+      }
+
+      // Close modals when clicking outside
+      window.addEventListener('click', (e) => {
+          if (e.target === adminLoginModal) {
+              adminLoginModal.classList.add('hidden');
+          }
+          if (e.target === approvalModal) {
+              approvalModal.classList.add('hidden');
+          }
+          if (e.target === teacherPasswordModal) {
+              teacherPasswordModal.classList.add('hidden');
+          }
+      });
+
+      // Handle Enter key in login form
+      adminPassword.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              confirmLogin.click();
+          }
+      });
+
+      // Handle Enter key in teacher password form
+      teacherPassword.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              confirmTeacherPassword.click();
+          }
+      });
+
+      // Initialize with some sample data (for initial testing, can be removed)
+      const sampleData = [
+          {
+              studentId: '11948',
+              studentName: 'เด็กชาย ชยพล ยารังษี',
+              studentClass: 'ม.1/1',
+              courseId: 'ท21101',
+              courseName: 'ภาษาไทย 1',
+              oldGrade: 'ร',
+              newGrade: '2',
+              teacherName: 'นางสาวสุภาวดี ใจดี',
+              approved: true,
+              timestamp: new Date().toISOString(),
+              approvalDate: new Date(Date.now() - 86400000).toISOString()
+          },
+          {
+              studentId: '11948',
+              studentName: 'เด็กชาย ชยพล ยารังษี',
+              studentClass: 'ม.1/1',
+              courseId: 'ค21101',
+              courseName: 'คณิตศาสตร์ 1',
+              oldGrade: '0',
+              newGrade: '1',
+              teacherName: 'นายณรงค์ฤทธิ์ ยศแก่น',
+              approved: false,
+              timestamp: new Date().toISOString(),
+              approvalDate: null
+          },
+          {
+              studentId: '11769',
+              studentName: 'นาย กฤตกร พรหมประดิษฐ์',
+              studentClass: 'ม.4/2',
+              courseId: 'อ31101',
+              courseName: 'ภาษาอังกฤษ 1',
+              oldGrade: 'มผ',
+              newGrade: 'ผ่าน',
+              teacherName: 'นางอนัญญา ริดเดิล',
+              approved: false,
+              timestamp: new Date().toISOString(),
+              approvalDate: null
+          }
+      ];
+
+      gradeCorrections = [...sampleData];
+    </script>
+</body>
+</html>
